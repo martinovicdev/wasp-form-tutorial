@@ -15,6 +15,7 @@ import {
 } from './components/ui/table';
 import { Button } from './components/ui/button';
 import Header from './components/layout/header';
+import { Link } from 'wasp/client/router';
 
 export const MainPage = ({ user }: { user: AuthUser }) => {
   const { data: customers, isLoading, error } = useQuery(getCustomers);
@@ -63,6 +64,9 @@ function CustomerTable({ customers }: { customers: Customer[] }) {
             <TableCell>{customer.surname}</TableCell>
             <TableCell>{customer.email}</TableCell>
             <TableCell className="flex gap-2">
+              <Link to="/customer/:id" params={{ id: customer.id }}>
+                <Button>Edit</Button>
+              </Link>
               <Button
                 variant={'destructive'}
                 onClick={() => {
