@@ -21,9 +21,16 @@ app.route('RootRoute', { path: '/', to: mainPage });
 
 const customerPage = app.page('CustomerPage', {
   authRequired: true,
-  component: { import: 'CustomerPage', from: '@src/CustomerPage' },
+  component: { import: 'CustomerPage', from: '@src/CreateCustomer' },
 });
-app.route('CustomerRoute', { path: '/customer', to: customerPage });
+
+const customerEditPage = app.page('CustomerEditPage', {
+  authRequired: true,
+  component: { import: 'CustomerEditPage', from: '@src/EditCustomer' },
+});
+
+app.route('CreateCustomer', { path: '/customer', to: customerPage });
+app.route('EditCustomer', { path: '/customer/:id', to: customerEditPage });
 
 const loginPage = app.page('LoginPage', {
   component: { import: 'LoginPage', from: '@src/auth/LoginPage' },
