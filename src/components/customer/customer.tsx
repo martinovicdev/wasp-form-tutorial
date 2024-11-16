@@ -23,19 +23,23 @@ export const CustomerForm = ({ customer }: { customer: Customer }) => {
   const { toast } = useToast();
 
   const formSchema = z.object({
-    name: z.string().min(1),
-    surname: z.string().min(1),
-    email: z.string().email().min(5),
-    dateOfBirth: z.date().max(new Date()),
+    name: z.string().min(1, { message: 'Name is required' }),
+    surname: z.string().min(1, { message: 'Surname is required' }),
+    email: z.string().email({ message: 'Invalid email address' }),
+    dateOfBirth: z.date().max(new Date(), {
+      message: 'Date of birth cannot be today, or in the future',
+    }),
     premiumUser: z.boolean(),
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  type FormData = z.infer<typeof formSchema>;
+
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: customer,
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: FormData) {
     if (customer.id) {
       try {
         await updateCustomer({
