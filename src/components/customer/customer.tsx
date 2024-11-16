@@ -27,7 +27,7 @@ export const CustomerForm = ({ customer }: { customer: Customer }) => {
     surname: z.string().min(1, { message: 'Surname is required' }),
     email: z.string().email({ message: 'Invalid email address' }),
     dateOfBirth: z.date().max(new Date(), {
-      message: 'Date of birth cannot be today, or in the future',
+      message: 'Date of birth cannot be in the future',
     }),
     premiumUser: z.boolean(),
   });
